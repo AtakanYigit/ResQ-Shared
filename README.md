@@ -32,7 +32,7 @@ Our app's advanced technology ensures that the information provided by the user 
 - Expo
 - Swagger Ui
 - Microsoft Sql Server Management Studio
-- Notion
+- Trello
 - Google Maps Api
 - Docker
 
