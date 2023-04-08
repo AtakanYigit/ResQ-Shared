@@ -13,11 +13,6 @@ Our app's advanced technology ensures that the information provided by the user 
 - [Burak Tırman](https://github.com/buraktirman)            - Chapter Member
 - [Edvin Davulcu](https://github.com/CentEDO)               - Core Team Member
 ---
-# Repositories of this Project:
-- [Back-End   (C#)](https://github.com/melihsahtiyan/EmergencyApplicationClassicArch)
-- [Front-End  (React)](https://github.com/AtakanYigit/Emergency-Application-Call-Center-Front-End)
-- [Mobile     (React-Native)](https://github.com/melihsahtiyan/emergency-app-mobile)
----
 # Technologies & Programming Languages Used In This Project
 - Google Cloud
 - React.js
