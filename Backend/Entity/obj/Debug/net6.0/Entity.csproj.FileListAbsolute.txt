@@ -1,0 +1,12 @@
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\bin\Debug\net6.0\Entity.deps.json
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\bin\Debug\net6.0\Entity.dll
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\bin\Debug\net6.0\Entity.pdb
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\Entity.csproj.AssemblyReference.cache
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\Entity.AssemblyInfoInputs.cache
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\Entity.AssemblyInfo.cs
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\Entity.csproj.CoreCompileInputs.cache
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\Entity.dll
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\refint\Entity.dll
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\Entity.pdb
+C:\Users\Burak Tirman\source\repos\EmergencyApplicationClassicArch\Entity\obj\Debug\net6.0\ref\Entity.dll
