@@ -14,8 +14,9 @@ Our app's advanced technology ensures that the information provided by the user 
 - [Edvin Davulcu](https://github.com/CentEDO)               - Core Team Member
 ---
 # Technologies & Programming Languages Used In This Project
-- Google Cloud
+- AWS
 - React.js
+- TypeScript
 - React Native
 - SCSS
 - C# (.NET)
@@ -53,3 +54,26 @@ These business logic steps will ensure that our emergency application provides p
 5. **Security:** The application will be designed with security in mind to ensure that users' personal information and emergency alerts are kept secure. This will include features such as encryption and secure user authentication.
 
 By incorporating these additional features, our emergency application will provide a comprehensive solution to users during emergency situations. The application will help users prepare for emergencies, provide prompt assistance during emergencies, and facilitate communication with emergency contacts.
+
+---
+## Design Files
+- Light Mode: https://xd.adobe.com/view/4f2b6a71-8a48-4517-8737-0d90996ad8c1-1a78/
+- Dark Mode: https://xd.adobe.com/view/9cce0795-1962-4d82-87c7-0de74f9d3e5f-c99d/
+---
+## Screenshots
+
+#### App:
+
+![Sign In](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/ced59a21-e654-4d46-9fa9-24d6595ee418)
+![Home](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/0d3a7141-f740-48b7-918b-38f7eaecf2b2)
+![Emergency Type](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/f3e06aba-5822-40f1-9e57-b4ec8879784e)
+![Options](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/7b2e8718-2b43-40ff-82e9-97fb203a858e)
+![Contacts](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/16d5fbda-76a7-4648-bc67-0a84568a7178)
+![Profile](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/8448cc48-57e2-4e80-ac29-af16ebfc2144)
+![Completed All Steps](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/c7be23b0-5722-4afe-81f9-56c912e4f532)
+
+#### Call Center:
+
+![Staff Sign In](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/3d881630-de1e-47c5-8c20-51e0c55e42e2)
+
+![Staff Home](https://github.com/AtakanYigit/ResQ-Call-Center-Front-End/assets/65567037/17f7f963-0ebe-4f78-a495-fda1416c46d0)
