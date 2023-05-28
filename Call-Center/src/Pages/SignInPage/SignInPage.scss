@@ -1,0 +1,116 @@
+.signInPage{
+    display:            flex;
+    justify-content:    center;
+    align-items:        center;
+    width:              100%;
+    height:             100%;
+    min-height:         100vh;
+
+    .signInContainer{
+        width:              100%;
+        height:             100vh;
+        display:            flex;
+        flex-direction:     column;
+        gap:                2rem;
+        justify-content:    center;
+        align-items:        center;
+
+        h1{
+            font-size:          2.2rem;
+            font-weight:        600;
+            color:              var(--red);
+        }
+
+        input[type = "text"], input[type = "password"]{
+            background-color:       var(--pure-white);
+            font-size:              1.2rem;
+            border:                 2px solid transparent;
+            border-radius:          8px;
+            box-shadow:             0 0 28px rgb(0, 0, 0, .08);
+            width:                  30%;
+            padding:                18px 20px;
+            outline:                none!important;
+            transition:             all .3s;
+
+            @media screen and (max-width: 1600px){
+                width:                  39%;
+            }
+
+            &:first-of-type{
+                margin-bottom:          -8px;
+            }
+
+            &:focus{
+                border:                 2px solid var(--red);
+            }
+
+            &::placeholder{
+                color:                  var(--gray);
+            }
+        }
+
+        input[type = "submit"]{
+            background-color:       var(--red);
+            color:                  var(--white);
+            font-size:              1.2rem;
+            border-radius:          8px;
+            border:                 none;
+            box-shadow:             0 0 32px rgb(0, 0, 0, .06);
+            padding:                16px 48px;
+            filter:                 brightness(1);
+            cursor:                 pointer;
+            transition:             all .2s;
+        }
+
+        a{
+            color:                  var(--black);
+            font-size:              1rem;
+            font-weight:            600;
+            text-decoration:        none;
+            transition:             all .2s;
+            position:               absolute;
+            bottom:                 64px;
+
+            &:hover{
+                color:              var(--red);
+            }
+        }
+    }
+
+    .imageContainer{
+        width:              100%;
+        height:             100vh;
+        position:           relative;
+
+        .imageContainerInner{
+            position:           absolute;
+            top:                0;
+            left:               0;
+            width:              100%;
+            height:             100%;
+            display:            flex;
+            justify-content:    center;
+            align-items:        center;
+            overflow:           hidden;
+            background-color:   #64000066;
+            transition:         all .3s;
+
+            &:hover{
+                background-color:   #4b006400;
+
+                img{
+                    opacity:            0;
+                }
+            }
+            
+            img{
+                transform-origin:   center;
+                transition:         all .5s;
+
+                @media screen and (max-width: 1600px){
+                    transform:          scale(.6);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,152 @@
+.post{
+    display:            flex;
+    flex-direction:     column;
+    justify-content:    center;
+    align-items:        center;
+    width:              560px;
+    background-color:   white;
+    border-radius:      8px;
+    box-shadow:         0 0 8px 0 rgba(0, 0, 0, 0.08);
+    padding:            16px 0 20px;
+
+    .mainInfoContainer{
+        display:            flex;
+        justify-content:    space-between;
+        width:              90%;
+
+        .imageAndInfoContainer{
+            display:            flex;
+            justify-content:    flex-start;
+
+            .profileImage{
+                width:              48px;
+                height:             48px;
+                border-radius:      50%;
+                background-color:   var(--gray);
+                border:             2px solid red;
+                border-radius:      5000%;
+            }
+
+            .mainInfo{
+                display:            flex;
+                flex-direction:     column;
+                justify-content:    center;
+                align-items:        flex-start;
+                margin-left:        16px;
+
+                .mainInfoSubContainer{
+                    display:            flex;
+                    justify-content:    flex-start;
+                    align-items:        center;
+                    gap:                8px;
+
+                    .bloodType{
+                        display:            flex;
+                        justify-content:    center;
+                        align-items:        center;
+                    }
+                }
+            }
+        }
+
+        .emergencyType{
+            display:           flex;
+            justify-content:   center;
+            align-items:       center;
+        }
+    }
+
+    .allergiesDiseasesContainer{
+        grid-template-columns: 1fr 1fr;
+        display:            grid;
+        width:              90%;
+        margin-top:         16px;
+
+        .allergiesDiseasesSubContainer{
+            display:            flex;
+            flex-direction:     column;
+            justify-content:    flex-start;
+            align-items:        flex-start;
+            gap:                8px;
+
+            .allergiesDiseases{
+                display:            flex;
+                justify-content:    flex-start;
+                align-items:        center;
+                gap:                8px;
+                margin-bottom:      8px;
+    
+                .allergyDisease{
+                    display:            flex;
+                    justify-content:    center;
+                    align-items:        center;
+                    background-color:   var(--black);
+                    color:              var(--white);
+                    border-radius:      4px;
+                    padding:            7px 8px 6px;
+                }
+            }
+        }
+    }
+
+    .resourcesContainer{
+        display:            flex;
+        flex-direction:     column;
+        justify-content:    flex-start;
+        align-items:        flex-start;
+        width:              90%;
+        margin-top:         16px;
+        gap:                8px;
+
+        .resources{
+            display:            flex;
+            justify-content:    flex-start;
+            align-items:        center;
+            gap:                8px;
+            margin-bottom:      8px;
+
+            .resource{
+                display:            flex;
+                justify-content:    center;
+                align-items:        center;
+                width:              88px;
+                height:             88px;
+                background-color:   var(--red);
+                color:              var(--white);
+                border-radius:      4px;
+                padding:            5px 8px 6px;
+            }
+        }
+    }
+
+    .actionsContainer{
+        display:            flex;
+        justify-content:    flex-start;
+        align-items:        center;
+        width:              90%;
+        margin-top:         16px;
+        gap:                16px;
+
+        .action{
+            border:             none;
+            font:               inherit;
+            cursor:             pointer;
+            outline:            inherit;
+            display:            flex;
+            justify-content:    center;
+            align-items:        center;
+            height:             44px;
+            background-color:   var(--red);
+            color:              var(--white);
+            border-radius:      4px;
+            padding:            6px 16px 5px;
+        }
+    }
+
+    h6{
+        font-size:          1.25rem;
+        font-weight:        600;
+        color:              var(--black);
+        margin-top:         8px;
+    }
+}

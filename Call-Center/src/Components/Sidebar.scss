@@ -1,0 +1,59 @@
+.sidebar{
+    position:           absolute;
+    height:             95vh;
+    width:              600px;
+    background-color:   var(--white);
+    z-index:            999;
+    top:                2.5vh;
+    left:               2vh;
+    border-radius:      8px;
+    display:            flex;
+    flex-direction:     column;
+    justify-content:    flex-start;
+    align-items:        center;
+    gap:                24px;
+    overflow:           hidden;
+
+    .filters{
+        display:            flex;
+        justify-content:    center;
+        align-items:        center;
+        width:              90%;
+        margin-top:         16px;
+        gap:                24px;
+        position:           relative;
+
+        .filter{
+            position:           relative;
+            cursor:             pointer;
+            font-weight:        600;
+
+            &:not(:last-of-type){
+                &::after{
+                    content:            "";
+                    display:            block;
+                    width:              1px;
+                    height:             10px;
+                    background-color:   var(--gray);
+                    position:           absolute;
+                    top:                4px;
+                    right:              -12px;
+                }
+            }
+
+            &.selectedFilter{
+                color:          var(--red);
+            }
+        }
+    }
+
+    .posts{
+        display:            flex;
+        flex-direction:     column;
+        justify-content:    flex-start;
+        align-items:        center;
+        gap:                20px;
+        overflow:           auto;
+        height:             92%;
+    }
+}

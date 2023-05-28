@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap");
+
+body, h1, h2, h3, h4, h5, h6, p{
+    font-family:                "Myriad Pro", "Helvetica Neue", Helvetica, "PT Sans", Arial, sans-serif;
+    font-style:                 normal;
+    font-weight:                400;
+}
+
+img{
+    -webkit-user-drag:          none;
+     -khtml-user-drag:          none;
+       -moz-user-drag:          none;
+         -o-user-drag:          none;
+            user-drag:          none;
+}
+
+// a{
+//     text-decoration:            none;
+// }
+
+html{
+    font-size:                  16px;
+}
+
+@media screen and (max-width: 900px) {
+    html{
+        font-size:              15px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    html{
+        font-size:              12px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    html{
+        font-size:              10px;
+    }
+}
+
+@media screen and (max-width: 340px){
+    html{
+        font-size:              8px;
+    }
+}
