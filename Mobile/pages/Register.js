@@ -15,42 +15,48 @@ import Header from "../components/Header";
 import InputContainer from "../components/InputContainer";
 import MyButton from "../components/MyButton";
 import { register } from "../services/authService";
-// import BirthDatePicker from "../components/BirthDatePicker";
+import MyDatePicker from "../components/MyDatePicker";
+import { SessionContext } from "../session/SessionProvider";
 
 const Register = ({ navigation }) => {
+  const { token, setToken, email, setEmail } = useContext(SessionContext);
+
   const { theme, setTheme } = useContext(ThemeContext);
   const [colors, setColors] = useState(
     theme === "light" ? globalColors.light : globalColors.dark
   );
 
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  // const [dateOfBirth, setDateOfBirth] = useState(new Date());
+  const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [identityNumber, setIdentityNumber] = useState("");
 
   useEffect(() => {
     setColors(theme === "light" ? globalColors.light : globalColors.dark);
   }, [theme]);
 
-  const onPressHandler = () => {
+  const onPressHandler = async () => {
     if (password == confirmPassword) {
       const userForRegister = {
         email: email,
         password: password,
         firstName: firstName,
         lastName: lastName,
-        // birthDate: dateOfBirth,
-        birthDate: "1999-12-12T15:36:32.199Z",
+        birthDate: dateOfBirth.toISOString(),
         identityNumber: identityNumber,
       };
-      console.log("====================================");
-      console.log("userForRegister: ", userForRegister);
-      console.log("====================================");
       if (password == confirmPassword) {
-        register(userForRegister);
+        const response = await register(userForRegister);
+
+        if (response.success === true) {
+          setToken(response.data.token);
+          navigation.navigate("Home");
+        }else{
+          console.log(userForRegister);
+          alert(response.message);
+        }
       }
     }
   };
@@ -58,29 +64,27 @@ const Register = ({ navigation }) => {
   const renderScreen = () => {
     return (
       <>
-        <View style={[styles.header]}>
-          <Header style={{ marginTop: Platform.OS === "ios" ? 10 : 0 }}>
-            Register
-          </Header>
-          <Header
-            style={{ color: colors.text, textAlign: "center", fontSize: 24 }}
-          >
-            Save Your Life In A Few Steps
-          </Header>
-        </View>
-        <StatusBar style="auto" />
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            gap: 24,
-          }}
-        >
-          <View style={styles.innerContainer}>
-            <View
-              style={styles.rowContainer}
+        <View style={styles.container}>
+          <View style={[styles.header]}>
+            <Header style={{ marginTop: Platform.OS === "ios" ? 20 : 0 }}>
+              Register
+            </Header>
+            <Header
+              style={{ color: colors.text, textAlign: "center", fontSize: 24 }}
             >
+              Save Your Life In A Few Steps
+            </Header>
+          </View>
+          <StatusBar style="auto" />
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              gap: 24,
+            }}
+          >
+            <View style={styles.innerContainer}>
               <InputContainer
                 label="First Name"
                 placeholder="First Name"
@@ -91,54 +95,74 @@ const Register = ({ navigation }) => {
                 placeholder="Last Name"
                 onChangeText={(e) => setLastName(e)}
               />
+              <InputContainer
+                label="E-mail"
+                placeholder="E-mail"
+                onChangeText={(e) => setEmail(e)}
+                keyboardType="email-address"
+              />
+              <InputContainer
+                label="Password"
+                placeholder="Password"
+                onChangeText={(e) => setPassword(e)}
+                isHidden={true}
+                scrollEnabled={false}
+              />
+              <InputContainer
+                label="Confirm Password"
+                placeholder="Confirm Password"
+                onChangeText={(e) => setConfirmPassword(e)}
+                isHidden={true}
+              />
+              <InputContainer
+                label="Identity Number"
+                placeholder="Identity Number"
+                onChangeText={(e) => setIdentityNumber(e)}
+              />
+              <MyDatePicker date={dateOfBirth} setDate={setDateOfBirth} />
             </View>
-            <InputContainer
-              label="E-mail"
-              placeholder="E-mail"
-              onChangeText={(e) => setEmail(e)}
-              keyboardType="email-address"
-            />
-            <InputContainer
-              label="Password"
-              placeholder="Password"
-              onChangeText={(e) => setPassword(e)}
-              isHidden={true}
-            />
-            <InputContainer
-              label="Confirm Password"
-              placeholder="Confirm Password"
-              onChangeText={(e) => setConfirmPassword(e)}
-              isHidden={true}
-            />
-            {/* 
-            <InputContainer
-              label="Date Of Birth"
-              placeholder="Date Of Birth"
-              onChangeText={(e) => setDateOfBirth(e)}
-              keyboardType="date"
-            /> 
-             <BirthDatePicker /> */}
-            <InputContainer
-              label="Identity Number"
-              placeholder="Identity Number"
-              onChangeText={(e) => setIdentityNumber(e)}
-            />
-          </View>
-          <View style={styles.footer}>
-            <View style={styles.rowContainer}>
-              <Checkbox />
-              <Text style={{ color: colors.button, fontWeight: "700" }}>
-                I accept{" "}
-                <Text
-                  style={{
-                    textDecorationLine: "underline",
-                    color: colors.button,
-                    fontWeight: "700",
+            <View style={styles.footer}>
+              <View style={styles.rowContainer}>
+                <Checkbox />
+                <Text style={{ color: colors.button, fontWeight: "700" }}>
+                  I accept{" "}
+                  <Text
+                    style={{
+                      textDecorationLine: "underline",
+                      color: colors.button,
+                      fontWeight: "700",
+                    }}
+                  >
+                    Privacy Policy
+                  </Text>
+                </Text>
+              </View>
+              <MyButton
+                onPress={() => {
+                  onPressHandler();
+                }}
+              >
+                Register
+              </MyButton>
+              <View style={styles.rowContainer}>
+                <Text style={[styles.text, { color: colors.text }]}>
+                  Already have an account?
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate("Login");
                   }}
                 >
-                  Privacy Policy
-                </Text>
-              </Text>
+                  <Text
+                    style={[
+                      styles.text,
+                      { color: colors.button, textDecorationLine: "underline" },
+                    ]}
+                  >
+                    Login
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           </View>
         </View>
@@ -159,22 +183,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 24,
+    paddingVertical: 24,
   },
   header: {
     gap: 36,
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: 10,
   },
   innerContainer: {
+    alignItems: "center",
+    width: "95%",
+    gap: 18,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    gap: 12,
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    gap: 18,
   },
   footer: {
     justifyContent: "center",
     alignItems: "center",
-    gap: 6,
+    gap: 18,
   },
   checkbox: {
     flexDirection: "row",
@@ -187,13 +216,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: "700",
-  },
-  rowContainer: {
-    flexDirection: "row",
-    gap: 12,
-    width: "48%",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 
