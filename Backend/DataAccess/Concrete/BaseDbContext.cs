@@ -14,6 +14,7 @@ namespace DataAccess.Concrete
 {
     public class BaseDbContext : DbContext
     {
+        protected IConfiguration Configuration { get; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Source> Sources { get; set; }
         public DbSet<User> Users { get; set; }
@@ -22,24 +23,44 @@ namespace DataAccess.Concrete
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<PostTemplates> PostTemplates { get; set; }
+        public DbSet<PostTemplate> PostTemplates { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<MedicalHistory> MedicalHistories { get; set; }
+        public DbSet<OngoingDisease> OngoingDiseases { get; set; }
         public DbSet<Medication> Medications { get; set; }
         public DbSet<Allergy> Allergies { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserAllergies> UserAllergies { get; set; }
         public DbSet<UserMedications> UserMedications { get; set; }
-        public DbSet<UserMedicalHistories> UserMedicalHistories { get; set; }
+        public DbSet<UserOngoingDisease> UserOngoingDiseases { get; set; }
+        public DbSet<GptChats> GptChats { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public BaseDbContext(DbContextOptions dbContextOptions,IConfiguration configuration) : base(dbContextOptions)
         {
-            optionsBuilder.UseSqlServer(/* PASTE YOUR CONNECTION STRING HERE */);
+            Configuration = configuration;
         }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>(a =>
+            {
+                a.ToTable("Users").HasKey(k => k.Id);
+                a.Property(u => u.Id).HasColumnName("Id");
+                a.Property(u => u.Email).HasColumnName("Email");
+                a.Property(u => u.FirstName).HasColumnName("FirstName");
+                a.Property(u => u.LastName).HasColumnName("LastName");
+                a.Property(u => u.PasswordHash).HasColumnName("PasswordHash");
+                a.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt");
+                a.Property(u => u.BirthDate).HasColumnName("BirthDate");
+                a.Property(u => u.IdentityNumber).HasColumnName("IdentityNumber");
+                a.Property(u => u.AuthenticatorType).HasColumnName("AuthenticatorType");
+                a.Property(u => u.Status).HasColumnName("Status");
+                a.HasMany(u => u.RefreshTokens);
+                a.HasMany(u => u.UserOperationClaims);
+                a.HasMany(u => u.Posts);
+                a.HasMany(u => u.GptChats);
+            });
+
+
             modelBuilder.Entity<Category>(e =>
             {
                 e.ToTable("Categories").HasKey(k => k.Id);
@@ -47,6 +68,22 @@ namespace DataAccess.Concrete
                 e.Property(c => c.CategoryName).HasColumnName("CategoryName");
                 e.HasMany(c => c.Posts);
                 e.HasMany(c => c.PostTemplates);
+            });
+
+            modelBuilder.Entity<GptChats>(e => 
+            {
+                e.ToTable("GptChats").HasKey(g => g.Id);
+                e.Property(g => g.Id).HasColumnName("Id");
+                e.Property(g => g.Message).HasColumnName("Message");
+                e.Property(g => g.Model).HasColumnName("Model");
+                e.Property(g => g.Usage).HasColumnName("Usage");
+                e.Property(g => g.UserId).HasColumnName("UserId");
+                e.Property(g => g.PostId).HasColumnName("PostId");
+                e.Property(g => g.ResponseId).HasColumnName("ResponseId");
+                e.Property(g => g.SentBy).HasColumnName("SentBy");
+                e.Property(g => g.Status).HasColumnName("Status");
+                e.HasOne(g => g.User).WithMany(u => u.GptChats).HasForeignKey(u => u.UserId);
+                e.HasOne(g => g.Post).WithMany(p => p.GptChats).HasForeignKey(p => p.PostId);
             });
 
             modelBuilder.Entity<Contact>(e =>
@@ -60,15 +97,24 @@ namespace DataAccess.Concrete
                 e.HasOne(c => c.ContactUser).WithMany(u => u.ContactUsers).HasForeignKey(u => u.ContactId);
             });
 
-            modelBuilder.Entity<MedicalHistory>(e =>
+            modelBuilder.Entity<OngoingDisease>(e =>
             {
-                e.ToTable("MedicalHistories").HasKey(k => k.Id);
+                e.ToTable("OngoingDiseases").HasKey(k => k.Id);
                 e.Property(m => m.Id).HasColumnName("Id");
                 e.Property(m => m.Name).HasColumnName("Name");
                 e.Property(m => m.Description).HasColumnName("Description");
-                e.HasMany(m => m.UserMedicalHistories);
+                e.HasMany(m => m.UserOngoingDiseases);
             });
 
+            modelBuilder.Entity<UserOngoingDisease>(e =>
+            {
+                e.ToTable("UserOngoingDiseases").HasKey(k => k.Id);
+                e.Property(u => u.Id).HasColumnName("Id");
+                e.Property(u => u.UserId).HasColumnName("UserId");
+                e.Property(u => u.OngoingDiseaseId).HasColumnName("OngoingDiseaseId");
+                e.HasOne(u => u.User).WithMany(u => u.UserOngoingDiseases).HasForeignKey(u => u.UserId);
+                e.HasOne(u => u.OngoingDisease).WithMany(u => u.UserOngoingDiseases).HasForeignKey(u => u.OngoingDiseaseId);
+            });
 
             modelBuilder.Entity<UserAllergies>(e =>
             {
@@ -76,18 +122,8 @@ namespace DataAccess.Concrete
                 e.Property(u => u.Id).HasColumnName("Id");
                 e.Property(u => u.UserId).HasColumnName("UserId");
                 e.Property(u => u.AllergyId).HasColumnName("AllergyId");
-                e.HasOne(u => u.UserProfile).WithMany(u => u.UserAllergies).HasForeignKey(u => u.UserId);
+                e.HasOne(u => u.User).WithMany(u => u.UserAllergies).HasForeignKey(u => u.UserId);
                 e.HasOne(u => u.Allergy).WithMany(u => u.UserAllergies).HasForeignKey(u => u.AllergyId);
-            });
-
-            modelBuilder.Entity<UserMedicalHistories>(e =>
-            {
-                e.ToTable("UserMedicalHistories").HasKey(k => k.Id);
-                e.Property(u => u.Id).HasColumnName("Id");
-                e.Property(u => u.UserId).HasColumnName("UserId");
-                e.Property(u => u.MedicalHistoryId).HasColumnName("MedicalHistoryId");
-                e.HasOne(u => u.UserProfile).WithMany(u => u.UserMedicalHistories).HasForeignKey(u => u.UserId);
-                e.HasOne(u => u.MedicalHistory).WithMany(u => u.UserMedicalHistories).HasForeignKey(u => u.MedicalHistoryId);
             });
 
             modelBuilder.Entity<UserMedications>(e =>
@@ -96,7 +132,7 @@ namespace DataAccess.Concrete
                 e.Property(u => u.Id).HasColumnName("Id");
                 e.Property(u => u.UserId).HasColumnName("UserId");
                 e.Property(u => u.MedicationId).HasColumnName("MedicationId");
-                e.HasOne(u => u.UserProfile).WithMany(u => u.UserMedications).HasForeignKey(u => u.UserId);
+                e.HasOne(u => u.User).WithMany(u => u.UserMedications).HasForeignKey(u => u.UserId);
                 e.HasOne(u => u.Medication).WithMany(u => u.UserMedications).HasForeignKey(u => u.MedicationId);
             });
 
@@ -147,24 +183,6 @@ namespace DataAccess.Concrete
                 e.HasOne(s => s.User).WithOne(u => u.SystemStaff).HasForeignKey<SystemStaff>(s => s.UserId);
             });
 
-            modelBuilder.Entity<User>(a =>
-            {
-                a.ToTable("Users").HasKey(k => k.Id);
-                a.Property(u => u.Id).HasColumnName("Id");
-                a.Property(u => u.Email).HasColumnName("Email");
-                a.Property(u => u.FirstName).HasColumnName("FirstName");
-                a.Property(u => u.LastName).HasColumnName("LastName");
-                a.Property(u => u.PasswordHash).HasColumnName("PasswordHash");
-                a.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt");
-                a.Property(u => u.BirthDate).HasColumnName("BirthDate");
-                a.Property(u => u.IdentityNumber).HasColumnName("IdentityNumber");
-                a.Property(u => u.AuthenticatorType).HasColumnName("AuthenticatorType");
-                a.Property(u => u.Status).HasColumnName("Status");
-                a.HasMany(u => u.RefreshTokens);
-                a.HasMany(u => u.UserOperationClaims);
-                a.HasMany(u => u.Posts);
-            });
-
             modelBuilder.Entity<UserOperationClaim>(a =>
             {
                 a.ToTable("UserOperationClaims").HasKey(k => k.Id);
@@ -187,10 +205,8 @@ namespace DataAccess.Concrete
                 e.Property(u => u.Address).HasColumnName("Address");
                 e.Property(u => u.PhoneNumber).HasColumnName("PhoneNumber");
                 e.Property(u => u.ProfilePicture).HasColumnName("ProfilePicture");
+                e.Property(u => u.Gender).HasColumnName("Gender");
                 e.HasOne(u => u.User).WithOne(u => u.UserProfile).HasForeignKey<UserProfile>(u => u.UserId);
-                e.HasMany(u => u.UserMedicalHistories);
-                e.HasMany(u => u.UserMedications);
-                e.HasMany(u => u.UserAllergies);
             });
 
             modelBuilder.Entity<RefreshToken>(a =>
@@ -218,7 +234,7 @@ namespace DataAccess.Concrete
                 a.HasMany(u => u.UserOperationClaims);
             });
 
-            modelBuilder.Entity<PostTemplates>(a =>
+            modelBuilder.Entity<PostTemplate>(a =>
             {
                 a.ToTable("PostTemplates").HasKey(k => k.Id);
                 a.Property(o => o.Id).HasColumnName("Id");
@@ -228,6 +244,7 @@ namespace DataAccess.Concrete
                 a.HasOne(o => o.Category).WithMany(c => c.PostTemplates).HasForeignKey(c => c.CategoryId);
             });
 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
