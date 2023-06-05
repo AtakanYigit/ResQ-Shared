@@ -19,11 +19,10 @@ namespace Entity.Concrete
         public virtual ICollection<Source> Sources { get; set; }
         public virtual Category Category { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<GptChats> GptChats { get; set; }
 
         public Post()
-        {
-
-        }
+        { }
 
         public Post(int id, int categoryId, int userId, string description, DateTime date, double latitude,
             double longitude, string title) : this()

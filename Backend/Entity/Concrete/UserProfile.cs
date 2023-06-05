@@ -13,12 +13,10 @@ namespace Entity.Concrete
         public string Address { get; set; }
         public string ProfilePicture { get; set; }
         public string BloodType { get; set; }
+        public string Gender { get; set; }
         public string Height { get; set; }
         public string Weight { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<UserMedicalHistories> UserMedicalHistories { get; set; }
-        public virtual ICollection<UserAllergies> UserAllergies { get; set; }
-        public virtual ICollection<UserMedications> UserMedications { get; set; }
 
         public UserProfile()
         {
