@@ -35,7 +35,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+            return new SuccessDataResult<User>(result);
         }
 
         public IResult Add(User user)
@@ -58,6 +58,16 @@ namespace Business.Concrete
         public IDataResult<User> GetById(int userId)
         {
             var result = _userDal.Get(u => u.Id == userId);
+            if (result == null)
+            {
+                return new ErrorDataResult<User>(Messages.UserNotFound);
+            }
+            return new SuccessDataResult<User>(result, Messages.UserListed);
+        }
+
+        public IDataResult<User> GetByEMail(string email)
+        {
+            var result = _userDal.Get(u => u.Email == email);
             if (result == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
