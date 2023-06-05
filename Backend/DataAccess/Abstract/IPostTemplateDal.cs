@@ -8,7 +8,7 @@ using Entity.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface IPostTemplateDal : IEntityRepository<PostTemplates>
+    public interface IPostTemplateDal : IEntityRepository<PostTemplate>
     {
     }
 }
